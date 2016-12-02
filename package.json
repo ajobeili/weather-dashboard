@@ -1,0 +1,28 @@
+{
+  "name": "dashboard-weather-app",
+  "version": "1.0.0",
+  "description": "An application that allows users to see weather in any city they want.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git"
+  },
+  "keywords": [
+    "Weather"
+  ],
+  "author": "ALi Jobeili",
+  "license": "ISC",
+  "devDependencies": {
+    "bootstrap": "^3.3.7",
+    "grunt-contrib-cssmin": "^1.0.2",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-uglify": "^2.0.0",
+    "uglify-js": "^2.7.5",
+    "uglifycss": "0.0.25"
+  }
+}

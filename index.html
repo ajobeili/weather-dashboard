@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="D:/ISS/Scratch/weather-dashboard/css/weather-icons.min.css">
+    <link href='font/font.css' rel='stylesheet'>
+    <link rel="stylesheet" href="css/weather.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+</head>
+
+<body id="weather-background" class="default-weather">
+<div id="chart" style="width: 100%;"></div>
+<div class=h111>
+    <h1><strong> Weather DashBoard</strong></h1>
+</div>
+
+    <!---|Canvas for animation 
+    The HTML <canvas> element is used to draw graphics, on the fly, via JavaScript. 
+    The <canvas> element is only a container for graphics. 
+    You must use JavaScript to actually draw the graphics. 
+    Canvas has several methods for drawing paths, boxes, circles, text, and adding images.
+    |-->
+    <canvas id="rain-canvas"></canvas>
+    <canvas id="cloud-canvas"></canvas>
+    <canvas id="weather-canvas"></canvas>
+    <canvas id="time-canvas"></canvas>
+    <canvas id="lightning-canvas"></canvas>
+    <!---|Canvas for animation|-->
+
+
+
+    <!---|Navigation|-->
+    <div class=navbar-inverse>
+    <nav >
+        <a href="#"><strong>Home</strong></a>
+        <a href="data/Setting.html"><strong>Setting</strong></a>
+    </nav>
+    </div>
+    <!---|Navigation|-->
+
+
+    <!---|Search Bar|-->
+    <div class="page-wrap">
+
+        <header class="search-bar">
+            <p class="search-text"><span class="search-location-text">Write the name of city: <input id="search-location-input" class="search-location-input" type="text" placeholder="City"> </span> 
+
+            </p>
+            <div class="search-location-button-group">
+                <button id="search-location-button" class="fa fa-search search-location-button search-button"></button><!--
+            --><button id="geo-button" class="geo-button fa fa-location-arrow search-button"></button>
+        </div>
+    </header>
+    <!---|Search Bar finish|-->
+
+
+
+
+
+    <!---|Help Button|-->
+    <div class="help-tip">
+        <p>Hello!! To use this Dashboard you should:<br><br>1- write the name of the city.<br>2- press enter or search button at the top right.<br>3- To know your location weather press located button at the top right<br><br>4- To change celsius to fahrenheit press setting</p>
+    </div>
+    <!---|Help Button finish|-->
+
+
+    <!--|Error Message|-->
+    <div id="geo-error-message" class="geo-error-message hide"><button id='close-error' class='fa fa-times close-error'></button>Uh oh! It looks like we can't find your location. If you're using an Adblocker, it may block our ability to find your location. Please type your city into هthe search box above!</div>
+    <!--|Error Message|-->
+
+
+
+
+    <div id="front-page-description" class="front-page-description middle">
+        <h1>Blank Canvas Weather</h1>
+        <h2>An Obligatory Weather App</h2>
+    </div>
+
+
+
+        <!--|Icon attribution|-->
+    <div class="attribution-links hide" id="attribution-links"><button id='close-attribution' class='fa fa-times close-attribution'></button>
+        <h3>Icons from <a href="https://erikflowers.github.io/weather-icons/">Weather Icons</a></h3>
+        <ul>
+            <li class="icon-attribution"><a href="file:///D:/ISS/weather-app-gh-pages/weather-app-gh-pages/images/cloud.jpg">Cloud</a> by Ali Jobeili</li>
+            <li class="icon-attribution"><a href="file:///D:/ISS/weather-app-gh-pages/weather-app-gh-pages/images/snow.jpg">Snow</a> from National Park Service Collection</li>
+            <li class="icon-attribution"><a href="file:///D:/ISS/weather-app-gh-pages/weather-app-gh-pages/images/drops.ico">Drop</a> Alex Fuller</li>
+            <li class="icon-attribution"><a href="https://thenounproject.com/term/smoke/27750/">Smoke</a> by Gerardo Martín Martínez</li>
+            <li class="icon-attribution"><a href="https://thenounproject.com/term/moon/13554/">Moon</a> by Jory Raphael</li>
+            <li class="icon-attribution"><a href="https://thenounproject.com/term/warning/18974/">Warning</a> by Icomatic</li>
+            <li class="icon-attribution"><a href="file:///D:/ISS/weather-app-gh-pages/weather-app-gh-pages/images/sun.png">Sun</a> by Jory Raphael</li>
+            <li class="icon-attribution"><a href="https://thenounproject.com/term/windsock/135621/">Windsock</a> by Golden Roof</li>
+        </div>
+                <!--- - - - - - - - - - - - - - - - - - - |Icon attribution|-->
+
+
+
+
+
+     <div id="weather" class="weather middle hide">
+            <div class="location" id="location"></div>
+
+            <div class="weather-container">
+                <div id="temperature-info" class="temperature-info">
+                    <div class="temperature" id="temperature"></div>
+                    <div class="weather-description" id="weather-description"></div>
+                </div>
+
+
+
+                <div class="weather-box">
+                    <ul class="weather-info" id="weather-info">
+                        <li class="weather-item humidity">Humidity: <span id="humidity"></span>%</li><!--
+                    --><li class="weather-item wind">Wind: <span id="wind-direction"></span> <span id="wind"></span> <span id="speed-unit"></span></li>
+                    </ul>
+                </div>
+            <strong><div id="clockbox"></div></strong>
+                
+           </div>
+     </div> 
+</div>
+
+
+
+<script>
+tday=new Array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday");
+tmonth=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+
+function GetClock(){
+var d=new Date();
+var nday=d.getDay(),nmonth=d.getMonth(),ndate=d.getDate(),nyear=d.getYear();
+if(nyear<1000) nyear+=1900;
+var nhour=d.getHours(),nmin=d.getMinutes(),nsec=d.getSeconds(),ap;
+
+if(nhour==0){ap=" AM";nhour=12;}
+else if(nhour<12){ap=" AM";}
+else if(nhour==12){ap=" PM";}
+else if(nhour>12){ap=" PM";nhour-=12;}
+
+if(nmin<=9) nmin="0"+nmin;
+if(nsec<=9) nsec="0"+nsec;
+
+document.getElementById('clockbox').innerHTML=""+tday[nday]+", "+tmonth[nmonth]+" "+ndate+", "+nyear+" "+nhour+":"+nmin+":"+nsec+ap+"";
+}
+
+window.onload=function(){
+GetClock();
+setInterval(GetClock,1000);
+}
+</script>
+
+
+
+
+<!--|Footer|-->
+<footer class="site-footer">
+
+        <div class="attribution site-footer-section">Powered by <a href="http://www.icc.com.lb/iss.html">International Software Solution .Sal</a>, Icons from <a href="https://erikflowers.github.io/weather-icons/"> Weather-Icon</a></div><!--
+    --><p class="author site-footer-section">Made by Ai Jobeili for Internship</p>
+    <div id="clockbox"></div>
+
+</footer>
+<!--|Footer|-->
+
+
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/weather.min.js"></script>
+</body>
+</html>
+
+
+<!--"Developed by Ali Jobeili"->
+                           _
+                 ||       | |            | |   
+                ||||      | |             _
+               ||  ||     | |            | |
+              ||||||||    | |_______     | |
+             |||    |||   |_________|    |_|
+<!-"Developed by Ali Jobeili"->
+
+
+
+
+
