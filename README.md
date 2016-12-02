@@ -12,4 +12,5 @@ I created this web app for Internship, I wanted to spend some time learning/usin
 
 
 1- it doesn't need installation as you extract the file from .zip you can browse the web by clicking on index.html 
-2- right-click of the mouse + open with> + (Chrome/ IE/ Safari/ FireFox)
+2- right-click of the mouse + open with> + (Chrome/ IE/ Safari/ FireFox)# weather-board
+# weather-dashboard
