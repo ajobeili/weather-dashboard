@@ -17,11 +17,17 @@
   "license": "ISC",
   "devDependencies": {
     "bootstrap": "^3.3.7",
+    "browser-sync": "^2.18.2",
     "grunt-contrib-cssmin": "^1.0.2",
     "gulp": "^3.9.1",
+    "gulp-auto-reload": "^0.1.0",
     "gulp-concat": "^2.6.1",
+    "gulp-connect": "^5.0.0",
     "gulp-cssmin": "^0.1.7",
+    "gulp-imagemin": "^3.1.1",
+    "gulp-remove-html-comments": "^1.0.1",
     "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.7",
     "uglify-js": "^2.7.5",
     "uglifycss": "0.0.25"
   }
