@@ -2,12 +2,37 @@ var gulp       = require('gulp');
 var concat     = require('gulp-concat');
 var autoReload = require('gulp-auto-reload');
 var gutil      = require('gulp-util');
+var uglify     = require('gulp-uglify');
+var pump       = require('pump');
+var cssmin     = require('gulp-cssmin')
+var rename     = require('gulp-rename');
+
+/////////////////////////////////////
+
+gulp.task('default', function () {
+    gulp.src('src/**/*.css')
+        .pipe(cssmin())
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest('dist'));
+});
 // some paths to build from 
 var paths = {
   html: "src/**/*.html",
   css: "src/**/*.css"
 };
  
+
+ /////////////////////////
+ gulp.task('uglify', function (cb) {
+  pump([
+        gulp.src('src/*/*.js'),
+        uglify(),
+        gulp.dest('dist')
+    ],
+    cb
+  );
+});
+ //////////////////////
 // the output 
 var outapp = "dist";
  
